@@ -21,7 +21,7 @@ class ClassController {
 
     static async addClass(req, res) {
         console.log(req.body.name);
-        if (!req.body.name || !req.body.guardian_email || !req.body.class_id) {
+        if (!req.body.name || !req.body.section || !req.body.teacher || !req.body.students) {
             util.setError(400, "Please provide complete details");
             return util.send(res);
         }
