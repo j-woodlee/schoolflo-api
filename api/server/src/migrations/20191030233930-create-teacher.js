@@ -11,11 +11,15 @@ module.exports = {
             email: {
                 type: Sequelize.STRING
             },
-            school: {
-                type: Sequelize.STRING
-            },
             password_hash: {
                 type: Sequelize.STRING
+            },
+            school_id: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: "Schools",
+                    key: "id"
+                }
             },
             createdAt: {
                 allowNull: false,
@@ -27,7 +31,7 @@ module.exports = {
             }
         });
     },
-    down: (queryInterface, /*Sequelize*/) => {
+    down: (queryInterface /*Sequelize*/) => {
         return queryInterface.dropTable("Teachers");
     }
 };

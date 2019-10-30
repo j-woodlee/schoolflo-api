@@ -17,6 +17,9 @@ module.exports = {
             teacher: {
                 type: Sequelize.INTEGER
             },
+            school: {
+                type: Sequelize.INTEGER
+            },
             students: {
                 type: Sequelize.ARRAY(Sequelize.INTEGER)
             },
@@ -30,7 +33,7 @@ module.exports = {
             }
         });
     },
-    down: (queryInterface, Sequelize) => {
+    down: (queryInterface /*Sequelize*/) => {
         return queryInterface.dropTable("Classes");
     }
 };

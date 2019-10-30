@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
         name: DataTypes.STRING,
         section: DataTypes.STRING,
         teacher: DataTypes.INTEGER,
+        school: DataTypes.INTEGER,
         students: DataTypes.ARRAY(DataTypes.INTEGER)
     }, {});
     Class.associate = function(models) {
