@@ -10,7 +10,7 @@ class TeacherController {
             if (allTeachers.length > 0) {
                 util.setSuccess(200, "Teachers retrieved", allTeachers);
             } else {
-                util.setSuccess(200, "No student found");
+                util.setSuccess(200, "No teacher found");
             }
             return util.send(res);
         } catch (error) {
@@ -21,7 +21,7 @@ class TeacherController {
 
     static async addTeacher(req, res) {
         console.log(req.body.name);
-        if (!req.body.name || !req.body.guardian_email || !req.body.student_id) {
+        if (!req.body.email || !req.body.password_hash) {
             util.setError(400, "Please provide complete details");
             return util.send(res);
         }
@@ -46,7 +46,7 @@ class TeacherController {
         try {
             const updateTeacher = await TeacherService.updateTeacher(id, alteredTeacher);
             if (!updateTeacher) {
-                util.setError(404, `Cannot find student with the id: ${id}`);
+                util.setError(404, `Cannot find teacher with the id: ${id}`);
             } else {
                 util.setSuccess(200, "Teacher updated", updateTeacher);
             }
@@ -69,7 +69,7 @@ class TeacherController {
             const theTeacher = await TeacherService.getATeacher(id);
 
             if (!theTeacher) {
-                util.setError(404, `Cannot find student with the id ${id}`);
+                util.setError(404, `Cannot find teacher with the id ${id}`);
             } else {
                 util.setSuccess(200, "Found Teacher", theTeacher);
             }
@@ -89,9 +89,9 @@ class TeacherController {
         }
 
         try {
-            const studentToDelete = await TeacherService.deleteTeacher(id);
+            const teacherToDelete = await TeacherService.deleteTeacher(id);
 
-            if (studentToDelete) {
+            if (teacherToDelete) {
                 util.setSuccess(200, "Teacher deleted");
             } else {
                 util.setError(404, `Teacher with the id ${id} cannot be found`);

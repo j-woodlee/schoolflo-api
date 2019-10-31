@@ -21,7 +21,7 @@ class FormGroupController {
 
     static async addFormGroup(req, res) {
         console.log(req.body.name);
-        if (!req.body.name || !req.body.section || !req.body.teacher || !req.body.students || !req.body.school) {
+        if (!req.body.name || !req.body.path) {
             util.setError(400, "Please provide complete details");
             return util.send(res);
         }

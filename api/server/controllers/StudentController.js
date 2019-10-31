@@ -21,7 +21,7 @@ class StudentController {
 
     static async addStudent(req, res) {
         console.log(req.body.name);
-        if (!req.body.name || !req.body.guardian_email || !req.body.student_id) {
+        if (!req.body.name || !req.body.guardian_email || !req.body.student_id || !req.body.school_id) {
             util.setError(400, "Please provide complete details");
             return util.send(res);
         }
