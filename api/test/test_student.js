@@ -6,8 +6,34 @@ import app from "../index";
 chai.use(chatHttp);
 const { expect } = chai;
 
+
+
+// need to create a school in order to make students
+describe("Creating school for student testing", () => {
+  it("It should create a school", (done) => {
+      const school = {
+          school_district: "Acalanes Union High School",
+          name: "Miramonte"
+      };
+      chai.request(app)
+          .post("/api/v1/schools")
+          .set("Accept", "application/json")
+          .send(school)
+          .end((err, res) => {
+              expect(res.status).to.equal(201);
+              expect(res.body.data).to.include({
+                  id: 1,
+                  name: school.name,
+                  school_district: school.school_district,
+              });
+              done();
+          });
+  });
+});
+
+
 describe("Testing the student endpoints:", () => {
-    it("It should create a student", (done) => {
+    it("It should create a student, a school must exist", (done) => {
         const student = {
             name: "Jake",
             guardian_email: "mom@email.com",
