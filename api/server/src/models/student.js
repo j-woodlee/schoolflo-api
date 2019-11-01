@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     const Student = sequelize.define("Student", {
         name: DataTypes.STRING,
         guardian_email: DataTypes.STRING,
-        student_id: DataTypes.STRING,
+        student_id_string: DataTypes.STRING,
         school_id: DataTypes.INTEGER
     }, {});
     Student.associate = function(models) {
@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
         Student.belongsTo(models.School, {
             foreignKey: "school_id",
             as: "school"
+        });
+
+        Student.hasMany(models.Form, {
+            foreignKey: "student",
+            as: "forms"
         });
     };
     return Student;

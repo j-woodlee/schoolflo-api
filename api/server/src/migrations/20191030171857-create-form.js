@@ -8,8 +8,12 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            student: {
-                type: Sequelize.INTEGER
+            student_id: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: "Students",
+                    key: "id"
+                }
             },
             path: {
                 type: Sequelize.STRING
@@ -17,7 +21,7 @@ module.exports = {
             name: {
                 type: Sequelize.STRING
             },
-            class: {
+            class_id: {
                 type: Sequelize.INTEGER
             },
             createdAt: {

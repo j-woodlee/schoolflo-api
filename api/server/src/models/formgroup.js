@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
     FormGroup.associate = function(models) {
     // associations can be defined here
+
     };
     return FormGroup;
 };

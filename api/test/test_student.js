@@ -10,25 +10,25 @@ const { expect } = chai;
 
 // need to create a school in order to make students
 describe("Creating school for student testing", () => {
-  it("It should create a school", (done) => {
-      const school = {
-          school_district: "Acalanes Union High School",
-          name: "Miramonte"
-      };
-      chai.request(app)
-          .post("/api/v1/schools")
-          .set("Accept", "application/json")
-          .send(school)
-          .end((err, res) => {
-              expect(res.status).to.equal(201);
-              expect(res.body.data).to.include({
-                  id: 1,
-                  name: school.name,
-                  school_district: school.school_district,
-              });
-              done();
-          });
-  });
+    it("It should create a school", (done) => {
+        const school = {
+            school_district: "Acalanes Union High School",
+            name: "Miramonte"
+        };
+        chai.request(app)
+            .post("/api/v1/schools")
+            .set("Accept", "application/json")
+            .send(school)
+            .end((err, res) => {
+                expect(res.status).to.equal(201);
+                expect(res.body.data).to.include({
+                    id: 1,
+                    name: school.name,
+                    school_district: school.school_district,
+                });
+                done();
+            });
+    });
 });
 
 
@@ -37,7 +37,8 @@ describe("Testing the student endpoints:", () => {
         const student = {
             name: "Jake",
             guardian_email: "mom@email.com",
-            student_id: "69420"
+            student_id: "69420",
+            school_id: 1
         };
         chai.request(app)
             .post("/api/v1/students")
@@ -49,7 +50,8 @@ describe("Testing the student endpoints:", () => {
                     id: 1,
                     name: student.name,
                     guardian_email: student.guardian_email,
-                    student_id: student.student_id
+                    student_id: student.student_id,
+                    school_id: student.school_id
                 });
                 done();
             });

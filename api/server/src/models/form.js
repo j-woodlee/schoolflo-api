@@ -1,13 +1,17 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
     const Form = sequelize.define("Form", {
-        student: DataTypes.INTEGER,
+        student_id: DataTypes.INTEGER,
         path: DataTypes.STRING,
         name: DataTypes.STRING,
-        class: DataTypes.INTEGER
+        class_id: DataTypes.INTEGER
     }, {});
     Form.associate = function(models) {
     // associations can be defined here
+        Form.belongsTo(models.Student, {
+            foreignKey: "student_id",
+            as: "student"
+        });
     };
     return Form;
 };

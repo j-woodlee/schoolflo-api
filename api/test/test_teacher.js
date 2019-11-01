@@ -1,6 +1,18 @@
+import chai from "chai";
+import chatHttp from "chai-http";
+import "chai/register-should";
+import app from "../index";
+
+chai.use(chatHttp);
+const { expect } = chai;
+
+
+
+
 describe("Testing the teacher endpoints:", () => {
     it("It should create a teacher", (done) => {
         const teacher = {
+            id:1,
             email: "teacher@teacher.com",
             password_hash: "12jasdlfkj2f",
             school_id: 1
@@ -23,8 +35,7 @@ describe("Testing the teacher endpoints:", () => {
 
     it("It should not create a teacher with incomplete parameters", (done) => {
         const teacher = {
-            email: "teacher@teacher.com",
-            password_hash: "12jasdlfkj2f"
+            email: "teacher@teacher.com"
         };
         chai.request(app)
             .post("/api/v1/teachers")
@@ -96,7 +107,7 @@ describe("Testing the teacher endpoints:", () => {
         const updatedTeacher = {
             id: teacherId,
             email: "teacher@email.com",
-            school_id: "69",
+            school_id: 1,
             password_hash: "jhfhjgfh"
         };
         chai.request(app)
@@ -108,7 +119,7 @@ describe("Testing the teacher endpoints:", () => {
                 expect(res.body.data.id).equal(updatedTeacher.id);
                 expect(res.body.data.email).equal(updatedTeacher.email);
                 expect(res.body.data.school_id).equal(updatedTeacher.school_id);
-                expect(res.body.data.school_id).equal(updatedTeacher.password_hash);
+                expect(res.body.data.password_hash).equal(updatedTeacher.password_hash);
                 done();
             });
     });
