@@ -8,10 +8,15 @@
 module.exports = (sequelize, DataTypes) => {
     const FormGroup = sequelize.define("FormGroup", {
         name: DataTypes.STRING,
-        path: DataTypes.STRING
+        path: DataTypes.STRING,
+        school_id: DataTypes.INTEGER
     }, {});
     FormGroup.associate = function(models) {
     // associations can be defined here
+        FormGroup.belongsTo(models.School, {
+            foreignKey: "school_id",
+            as: "school"
+        });
 
     };
     return FormGroup;

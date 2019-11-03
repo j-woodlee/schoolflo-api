@@ -14,6 +14,13 @@ module.exports = {
             path: {
                 type: Sequelize.STRING
             },
+            school_id: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: "Schools",
+                    key: "id"
+                }
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE

@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         });
 
         Student.hasMany(models.Form, {
-            foreignKey: "student",
+            foreignKey: "student_id",
             as: "forms"
         });
     };

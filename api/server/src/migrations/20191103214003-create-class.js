@@ -17,8 +17,12 @@ module.exports = {
             teacher: {
                 type: Sequelize.INTEGER
             },
-            school: {
-                type: Sequelize.INTEGER
+            school_id: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: "Schools",
+                    key: "id"
+                }
             },
             students: {
                 type: Sequelize.ARRAY(Sequelize.INTEGER)
