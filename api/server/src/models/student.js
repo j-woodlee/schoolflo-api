@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     const Student = sequelize.define("Student", {
         name: DataTypes.STRING,
         guardian_email: DataTypes.STRING,
-        student_id_string: DataTypes.STRING,
+        student_id_from_school: DataTypes.STRING,
         school_id: DataTypes.INTEGER
     }, {});
     Student.associate = function(models) {

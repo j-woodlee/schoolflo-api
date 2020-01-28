@@ -14,7 +14,7 @@ module.exports = {
             guardian_email: {
                 type: Sequelize.STRING
             },
-            student_id: {
+            student_id_from_school: {
                 type: Sequelize.STRING
             },
             school_id: {

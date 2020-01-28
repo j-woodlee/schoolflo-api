@@ -37,7 +37,7 @@ describe("Testing the student endpoints:", () => {
         const student = {
             name: "Jake",
             guardian_email: "mom@email.com",
-            student_id: "69420",
+            student_id_from_school: "69420",
             school_id: 1
         };
         chai.request(app)
@@ -50,7 +50,7 @@ describe("Testing the student endpoints:", () => {
                     id: 1,
                     name: student.name,
                     guardian_email: student.guardian_email,
-                    student_id: student.student_id,
+                    student_id_from_school: student.student_id_from_school,
                     school_id: student.school_id
                 });
                 done();
@@ -81,7 +81,7 @@ describe("Testing the student endpoints:", () => {
                 res.body.data[0].should.have.property("id");
                 res.body.data[0].should.have.property("name");
                 res.body.data[0].should.have.property("guardian_email");
-                res.body.data[0].should.have.property("student_id");
+                res.body.data[0].should.have.property("student_id_from_school");
                 done();
             });
     });
