@@ -21,7 +21,7 @@ class TeacherController {
 
     static async addTeacher(req, res) {
         console.log(req.body.name);
-        if (!req.body.email || !req.body.password_hash) {
+        if (!req.body.email || !req.body.password_hash || !req.body.school_id) {
             util.setError(400, "Please provide complete details");
             return util.send(res);
         }
