@@ -185,7 +185,7 @@ describe("Testing the teacher endpoints:", () => {
             .end((err, res) => {
                 expect(res.status).to.equal(404);
                 res.body.should.have.property("message")
-                    .eql(`teacher with the id ${teacherId} cannot be found`);
+                    .eql(`Teacher with the id ${teacherId} cannot be found`);
                 done();
             });
     });

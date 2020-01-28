@@ -96,7 +96,7 @@ describe("Testing the student endpoints:", () => {
                 res.body.data.should.have.property("id");
                 res.body.data.should.have.property("name");
                 res.body.data.should.have.property("guardian_email");
-                res.body.data.should.have.property("student_id");
+                res.body.data.should.have.property("student_id_from_school");
                 done();
             });
     });
