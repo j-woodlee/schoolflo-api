@@ -1,7 +1,8 @@
 import TeacherService from "../services/TeacherService";
 import Util from "../utils/Utils";
-// import Teacher from "../src/models/teacher.js";
-let Teacher = require("../src/models/teacher").Teacher;
+import bcrypt from "bcryptjs";
+// let Teacher = require("../src/models/teacher").Teacher;
+import { Teacher } from "../src/models/teacher";
 
 console.log("Teacher: ");
 console.log(Teacher);
@@ -34,7 +35,12 @@ class TeacherController {
             util.setError(400, "Please provide complete details");
             return util.send(res);
         }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newTeacher.password_hash, salt);
         const newTeacher = req.body;
+        newTeacher.password_hash = hashedPassword;
+
         try {
             const createdTeacher = await TeacherService.addTeacher(newTeacher);
             util.setSuccess(201, "Teacher Added!", createdTeacher);
@@ -113,6 +119,34 @@ class TeacherController {
     }
 
     static async signIn(req, res) {
+
+        if(!req.body.email || !req.body.password) {
+            util.setError(400, "Please provide complete sign in details");
+            return util.send(res);
+        }
+
+        try {
+            let teacher = await Teacher.findOne({
+                where: {
+                    email: req.body.email
+                }
+            });
+
+            if (!teacher) {
+                util.setError(401, "Authentication failed. Teacher not found.");
+                return util.send(res);
+            }
+
+            const valid = await bcrypt.compare(req.body.password, teacher.password);
+            if (!valid) {
+                throw new Error("Password not correct");
+            }
+
+        } catch (error) {
+            util.setError(418, error);
+            return util.send(res);
+        }
+
         Teacher.findOne({
             where: {
                 email: req.body.email
