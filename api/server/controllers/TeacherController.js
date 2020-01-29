@@ -1,5 +1,14 @@
 import TeacherService from "../services/TeacherService";
 import Util from "../utils/Utils";
+// import Teacher from "../src/models/teacher.js";
+let Teacher = require("../src/models/teacher").Teacher;
+
+console.log("Teacher: ");
+console.log(Teacher);
+import jwt from "jsonwebtoken";
+
+console.log("jwt: ");
+console.log(jwt);
 
 const util = new Util();
 
@@ -101,6 +110,34 @@ class TeacherController {
             util.setError(400, error);
             return util.send(res);
         }
+    }
+
+    static async signIn(req, res) {
+        Teacher.findOne({
+            where: {
+                email: req.body.email
+            }
+        }).then((teacher) => {
+            if (!teacher) {
+                util.setError(401, "Authentication failed. Teacher not found.");
+                return util.send(res);
+            }
+            teacher.comparePassword(req.body.password_hash, (err, isMatch) => {
+                if (isMatch && !err) {
+                    let token = jwt.sign(
+                        JSON.parse(JSON.stringify(teacher)),
+                        "nodeauthsecret", {expiresIn: 86400 * 30});
+                    jwt.verify(token, "nodeauthsecret", (err, data) => {
+                        console.log(err, data);
+                    });
+                    res.json({success: true, token: "JWT: " + token});
+                } else {
+                    res.status(401).send({success: false, msg: "Authentication failed. Wrong password."});
+                }
+            });
+        }).catch((error) => {
+            res.status(400).send(error);
+        });
     }
 }
 

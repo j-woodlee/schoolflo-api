@@ -8,5 +8,6 @@ router.post("/", TeacherController.addTeacher);
 router.get("/:id", TeacherController.getATeacher);
 router.put("/:id", TeacherController.updatedTeacher);
 router.delete("/:id", TeacherController.deleteTeacher);
+router.post("/signin", TeacherController.signIn);
 
 export default router;

@@ -5,7 +5,7 @@ import app from "../index";
 
 chai.use(chatHttp);
 const { expect } = chai;
-
+import bcrypt from "bcrypt-nodejs";
 
 
 
@@ -17,6 +17,7 @@ describe("Testing the teacher endpoints:", () => {
             password_hash: "12jasdlfkj2f",
             school_id: 1
         };
+
         chai.request(app)
             .post("/api/v1/teachers")
             .set("Accept", "application/json")
@@ -26,7 +27,6 @@ describe("Testing the teacher endpoints:", () => {
                 expect(res.body.data).to.include({
                     id: 1,
                     email: teacher.email,
-                    password_hash: teacher.password_hash,
                     school_id: teacher.school_id
                 });
                 done();
