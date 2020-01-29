@@ -201,4 +201,19 @@ describe("Testing the teacher endpoints:", () => {
                 done();
             });
     });
+
+    it("It should successfully login a teacher with proper credentials", (done) => {
+        const teacher = {
+            email: "teacher@teacher.com",
+            password_hash: "12jasdlfkj2f",
+        };
+        chai.request(app)
+            .post(`/api/v1/teachers/signin`)
+            .set("Accept", "application/json")
+            .send(teacher)
+            .end((err, res) => {
+                expect(res.status).to.equal(400);
+                done();
+            });
+    });
 });
