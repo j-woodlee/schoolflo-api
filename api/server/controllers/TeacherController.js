@@ -143,6 +143,16 @@ class TeacherController {
                 throw new Error("Password not correct");
             }
 
+            const accessToken = createAccessToken(teacher.id);
+            const refreshToken = createRefreshToken(teacher.id);
+
+            // put the refreshtoken in the database
+            
+            // send token.  refreshToken as a cookie and accesstoken as a regular response
+
+            util.setSuccess(200, "Should include access token as regular response", accessToken);
+            return util.send(res);
+
         } catch (error) {
             util.setError(418, error);
             return util.send(res);
