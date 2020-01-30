@@ -36,9 +36,10 @@ class TeacherController {
             return util.send(res);
         }
 
+        const newTeacher = req.body;
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(newTeacher.password_hash, salt);
-        const newTeacher = req.body;
+
         newTeacher.password_hash = hashedPassword;
 
         try {
