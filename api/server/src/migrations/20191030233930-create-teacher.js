@@ -14,6 +14,9 @@ module.exports = {
             password_hash: {
                 type: Sequelize.STRING
             },
+            refresh_token: {
+                type: Sequelize.STRING
+            },
             school_id: {
                 type: Sequelize.INTEGER,
                 references: {

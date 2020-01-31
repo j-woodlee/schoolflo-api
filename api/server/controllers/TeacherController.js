@@ -1,11 +1,7 @@
 import TeacherService from "../services/TeacherService";
 import Util from "../utils/Utils";
 import bcrypt from "bcryptjs";
-// let Teacher = require("../src/models/teacher").Teacher;
-import { Teacher } from "../src/models/teacher";
-
-console.log("Teacher: ");
-console.log(Teacher);
+import { createAccessToken, createRefreshToken } from "../src/tokens";
 import jwt from "jsonwebtoken";
 
 console.log("jwt: ");
@@ -127,11 +123,7 @@ class TeacherController {
         }
 
         try {
-            let teacher = await Teacher.findOne({
-                where: {
-                    email: req.body.email
-                }
-            });
+            let teacher = await TeacherService.getATeacherByEmail(req.body.email);
 
             if (!teacher) {
                 util.setError(401, "Authentication failed. Teacher not found.");
@@ -140,15 +132,22 @@ class TeacherController {
 
             const valid = await bcrypt.compare(req.body.password, teacher.password);
             if (!valid) {
-                throw new Error("Password not correct");
+                throw new Error("Password not correct.");
             }
 
             const accessToken = createAccessToken(teacher.id);
             const refreshToken = createRefreshToken(teacher.id);
 
             // put the refreshtoken in the database
-            
+            teacher.refresh_token = refreshToken;
+            TeacherService.updateTeacher(teacher.id, teacher);
+
             // send token.  refreshToken as a cookie and accesstoken as a regular response
+
+            res.cookie("refreshtoken", refreshToken, {
+                httpOnly: true,
+                path: "/refresh_token"
+            });
 
             util.setSuccess(200, "Should include access token as regular response", accessToken);
             return util.send(res);
@@ -157,32 +156,6 @@ class TeacherController {
             util.setError(418, error);
             return util.send(res);
         }
-
-        Teacher.findOne({
-            where: {
-                email: req.body.email
-            }
-        }).then((teacher) => {
-            if (!teacher) {
-                util.setError(401, "Authentication failed. Teacher not found.");
-                return util.send(res);
-            }
-            teacher.comparePassword(req.body.password_hash, (err, isMatch) => {
-                if (isMatch && !err) {
-                    let token = jwt.sign(
-                        JSON.parse(JSON.stringify(teacher)),
-                        "nodeauthsecret", {expiresIn: 86400 * 30});
-                    jwt.verify(token, "nodeauthsecret", (err, data) => {
-                        console.log(err, data);
-                    });
-                    res.json({success: true, token: "JWT: " + token});
-                } else {
-                    res.status(401).send({success: false, msg: "Authentication failed. Wrong password."});
-                }
-            });
-        }).catch((error) => {
-            res.status(400).send(error);
-        });
     }
 }
 

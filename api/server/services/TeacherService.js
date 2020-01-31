@@ -46,6 +46,18 @@ class TeacherService {
         }
     }
 
+    static async getATeacherByEmail(_email) {
+        try {
+            const theTeacher = await database.Teacher.findOne({
+                where: { email: _email}
+            });
+
+            return theTeacher;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     static async deleteTeacher(id) {
         try {
             const teacherToDelete = await database.Teacher.findOne({ where: { id: Number(id) } });
